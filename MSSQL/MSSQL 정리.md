@@ -46,3 +46,14 @@ FROM sys.sysprocesses A<BR>
 JOIN sys.dm_exec_connections B<BR>		
 ON A.spid = B.session_id<BR>		
 ORDER BY spid		
+
+## 실행중인 쿼리 확인 ##
+SELECT<BR> 					
+   sqltext.TEXT,<BR>					
+   req.session_id,<BR>					
+   req.status,<BR>					
+   req.command,<BR>					
+   req.cpu_time,<BR>					
+   req.total_elapsed_time<BR>					
+FROM sys.dm_exec_requests req<BR>					
+CROSS APPLY sys.dm_exec_sql_text(sql_handle) AS sqltext 					
